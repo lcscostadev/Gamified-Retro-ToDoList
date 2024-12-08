@@ -3,7 +3,7 @@
   import React, { useState, useEffect, useCallback } from 'react'
   import { v4 as uuidv4 } from 'uuid'
   import { retroSounds } from '../utils/sounds'
-  import { gameSounds } from '../utils/gameSounds'
+  // import { gameSounds } from '../utils/gameSounds'
   import { Music, ChevronRight, ChevronDown, Search, ArrowUp, ArrowDown, Menu, X } from 'lucide-react'
   import StreakTracker from './StreakTracker'
   import { missions, achievements, difficultyLevels, Mission } from '../utils/missionsAndAchievements'
@@ -121,7 +121,6 @@
 
     useEffect(() => {
       retroSounds.init();
-      gameSounds.init();
       const interval = setInterval(() => {
         setCursorVisible((prev) => !prev)
       }, 530)
@@ -235,7 +234,7 @@
               const allSubtasksCompleted = todo.subtasks.every(subtask => subtask.completed)
               const newCompleted = todo.subtasks.length === 0 ? !todo.completed : allSubtasksCompleted
               if (newCompleted) {
-                gameSounds.completeTask()
+                retroSounds.completeTask()
               } else {
                 retroSounds.uncheck()
               }
@@ -432,7 +431,7 @@
             completedMissions: [...prev.completedMissions, prev.activeMission!.id],
             activeMission: null,
           }));
-          gameSounds.unlockAchievement();
+          retroSounds.unlockAchievement();
           setCongratsMessage(gameState.activeMission.reward);
         }
       }
@@ -450,7 +449,7 @@
           ...prev,
           unlockedAchievements: [...prev.unlockedAchievements, 'taskConqueror'],
         }));
-        gameSounds.unlockAchievement();
+        retroSounds.unlockAchievement();
         setCongratsMessage('Achievement unlocked: Task Conqueror!');
       }
 
@@ -459,7 +458,7 @@
           ...prev,
           unlockedAchievements: [...prev.unlockedAchievements, 'streakHero'],
         }));
-        gameSounds.unlockAchievement();
+        retroSounds.unlockAchievement();
         setCongratsMessage('Achievement unlocked: Streak Hero!');
       }
     }, [todos, gameState.streak, gameState.unlockedAchievements]);

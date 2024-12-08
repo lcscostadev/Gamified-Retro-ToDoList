@@ -3,13 +3,16 @@ class RetroSounds {
   private gainNode: GainNode | null = null;
   private musicAudio: HTMLAudioElement | null = null;
 
-  private createOscillator(frequency: number, type: OscillatorType, duration: number) {
+  private createSound(frequency: number, type: OscillatorType, duration: number) {
     if (!this.audioContext || !this.gainNode) return;
 
     const oscillator = this.audioContext.createOscillator();
+    const gainNode = this.audioContext.createGain(); // Temporary gain node for volume control
+    gainNode.gain.setValueAtTime(this.gainNode.gain.value, this.audioContext.currentTime);
     oscillator.type = type;
     oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
-    oscillator.connect(this.gainNode);
+    oscillator.connect(gainNode);
+    gainNode.connect(this.audioContext.destination);
     oscillator.start();
     oscillator.stop(this.audioContext.currentTime + duration);
   }
@@ -18,9 +21,8 @@ class RetroSounds {
     this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
     this.gainNode = this.audioContext.createGain();
     this.gainNode.connect(this.audioContext.destination);
-    this.gainNode.gain.setValueAtTime(0.5, this.audioContext.currentTime);
+    this.gainNode.gain.setValueAtTime(0.5, this.audioContext.currentTime); // Default volume
 
-    // Initialize background music
     this.musicAudio = new Audio('/retro-music.mp3');
     this.musicAudio.loop = true;
   }
@@ -48,42 +50,58 @@ class RetroSounds {
     return this.musicAudio && !this.musicAudio.paused;
   }
 
+  // Sound effects from GameSounds
+  completeTask() {
+    this.createSound(440, 'square', 0.1);
+    setTimeout(() => this.createSound(880, 'square', 0.1), 100);
+  }
+
+  unlockAchievement() {
+    this.createSound(523.25, 'sine', 0.1);
+    setTimeout(() => this.createSound(659.25, 'sine', 0.1), 100);
+    setTimeout(() => this.createSound(783.99, 'sine', 0.1), 200);
+  }
+
+  error() {
+    this.createSound(220, 'sawtooth', 0.2);
+  }
+
+  // Sound effects from RetroSounds
   typing() {
-    this.createOscillator(440, 'square', 0.02);
+    this.createSound(440, 'square', 0.02);
   }
 
   searchTyping() {
-    this.createOscillator(550, 'sine', 0.02);
+    this.createSound(550, 'sine', 0.02);
   }
 
   socialTyping() {
-    this.createOscillator(660, 'sine', 0.02);
+    this.createSound(660, 'sine', 0.02);
   }
 
   add() {
-    this.createOscillator(660, 'sine', 0.1);
-    setTimeout(() => this.createOscillator(880, 'sine', 0.1), 100);
+    this.createSound(660, 'sine', 0.1);
+    setTimeout(() => this.createSound(880, 'sine', 0.1), 100);
   }
 
   check() {
-    this.createOscillator(880, 'sine', 0.1);
-    setTimeout(() => this.createOscillator(1100, 'sine', 0.1), 100);
+    this.createSound(880, 'sine', 0.1);
+    setTimeout(() => this.createSound(1100, 'sine', 0.1), 100);
   }
 
   uncheck() {
-    this.createOscillator(1100, 'sine', 0.1);
-    setTimeout(() => this.createOscillator(880, 'sine', 0.1), 100);
+    this.createSound(1100, 'sine', 0.1);
+    setTimeout(() => this.createSound(880, 'sine', 0.1), 100);
   }
 
   delete() {
-    this.createOscillator(220, 'square', 0.1);
-    setTimeout(() => this.createOscillator(110, 'square', 0.1), 100);
+    this.createSound(220, 'square', 0.1);
+    setTimeout(() => this.createSound(110, 'square', 0.1), 100);
   }
 
   moveTask() {
-    this.createOscillator(440, 'sine', 0.1);
+    this.createSound(440, 'sine', 0.1);
   }
 }
 
 export const retroSounds = new RetroSounds();
-
