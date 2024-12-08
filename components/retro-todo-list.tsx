@@ -21,6 +21,7 @@
     subtasks: Subtask[]
     expanded: boolean
     createdAt: string;
+    deleting?: boolean; 
   }
 
   interface StreakData {
@@ -307,9 +308,11 @@
     }
 
     const toggleMusic = () => {
-      retroSounds.toggleMusic()
-      setIsMusicPlaying(retroSounds.isMusicPlaying())
-    }
+      retroSounds.toggleMusic();
+      const isPlaying = retroSounds.isMusicPlaying();
+      setIsMusicPlaying(isPlaying ?? false); 
+    };
+    
 
     const toggleExpanded = (id: string) => {
       setTodos(prevTodos => prevTodos.map(todo =>
@@ -409,7 +412,7 @@
     }, [todos, gameState.activeMission]);
 
     const checkAchievements = useCallback(() => {
-      const completedTasks = todos.filter(todo => todo.completed).length;
+      // const completedTasks = todos.filter(todo => todo.completed).length;
       const todayTasks = todos.filter(todo => {
         const createdToday = new Date(todo.createdAt).toDateString() === new Date().toDateString();
         return createdToday && todo.completed;
