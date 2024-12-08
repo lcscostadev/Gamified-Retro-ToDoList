@@ -55,7 +55,7 @@ const StreakTracker: React.FC<StreakTrackerProps> = ({ streakData }) => {
         </div>
         <div className="flex-1">
           <div className="flex mb-1">
-            {monthNames.map((month, index) => (
+            {monthNames.map((month) => (
               <div key={month} className="flex-1 text-center text-xs">
                 {month}
               </div>
