@@ -16,6 +16,7 @@ const StreakTracker: React.FC<StreakTrackerProps> = ({ streakData }) => {
   const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getWeekNumber = (date: Date) => {
     const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
     const daysSinceFirstDay = Math.floor((date.getTime() - firstDayOfYear.getTime()) / (24 * 60 * 60 * 1000));
@@ -30,7 +31,7 @@ const StreakTracker: React.FC<StreakTrackerProps> = ({ streakData }) => {
   };
 
   const weeks: Date[][] = [];
-  let currentDate = new Date(startOfYear);
+  const currentDate = new Date(startOfYear);
   currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 1); // Start from the first Monday
 
   while (currentDate <= endOfYear) {
@@ -61,8 +62,8 @@ const StreakTracker: React.FC<StreakTrackerProps> = ({ streakData }) => {
             ))}
           </div>
           <div className="grid grid-flow-col gap-1">
-            {weeks.map((week, weekIndex) => (
-              <div key={weekIndex} className="grid grid-rows-7 gap-1">
+            {weeks.map((week, _weekIndex) => (
+              <div key={_weekIndex} className="grid grid-rows-7 gap-1">
                 {week.map((date, dayIndex) => {
                   const dateString = date.toISOString().split('T')[0];
                   const tasksCompleted = streakData[dateString] || 0;

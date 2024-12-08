@@ -160,13 +160,13 @@ export default function RetroTodoList() {
     e.preventDefault()
     if (inputValue.trim() && !isAppDisabled) {
       setTodos(prevTodos => {
-        const newTodos = [...prevTodos, { 
-          id: uuidv4(), 
-          text: inputValue, 
-          completed: false, 
-          subtasks: [], 
+        const newTodos = [...prevTodos, {
+          id: uuidv4(),
+          text: inputValue,
+          completed: false,
+          subtasks: [],
           expanded: false,
-          createdAt: new Date().toISOString() 
+          createdAt: new Date().toISOString()
         }]
         saveTodosToLocalStorage(newTodos);
         return newTodos;
@@ -176,7 +176,7 @@ export default function RetroTodoList() {
       clearSocialTyping()
 
       // Add interaction prompt
-      if (Math.random() < 0.3) { 
+      if (Math.random() < 0.3) {
         setInteractionPrompt("What will you do next? [A] Add another task, [B] Check achievements");
       }
     }
@@ -649,9 +649,8 @@ export default function RetroTodoList() {
             {filteredTodos.map((todo, index) => (
               <li
                 key={todo.id}
-                className={`border-b border-green-500 pb-1 group transition-all duration-300 ${
-                  todo.deleting ? 'opacity-0 h-0' : 'opacity-100 h-auto'
-                }`}
+                className={`border-b border-green-500 pb-1 group transition-all duration-300 ${todo.deleting ? 'opacity-0 h-0' : 'opacity-100 h-auto'
+                  }`}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center flex-grow">
@@ -672,9 +671,8 @@ export default function RetroTodoList() {
                       disabled={isAppDisabled}
                     />
                     <span
-                      className={`uppercase transition-all duration-300 ease-in-out relative ${
-                        todo.completed ? 'pixelated-text' : ''
-                      } glow text-sm`}
+                      className={`uppercase transition-all duration-300 ease-in-out relative ${todo.completed ? 'pixelated-text' : ''
+                        } glow text-sm`}
                       data-text={todo.text}
                     >
                       {todo.text}
@@ -830,7 +828,7 @@ export default function RetroTodoList() {
           </div>
           {showClearMessage && (
             <div className="mt-2 text-yellow-400 glow text-xs">
-              > Type "clear" to dismiss social links and continue using the app.
+              &gt; Type "clear" to dismiss social links and continue using the app.
             </div>
           )}
           <div className="mt-8">
