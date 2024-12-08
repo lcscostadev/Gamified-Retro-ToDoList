@@ -62,8 +62,8 @@ const StreakTracker: React.FC<StreakTrackerProps> = ({ streakData }) => {
             ))}
           </div>
           <div className="grid grid-flow-col gap-1">
-            {weeks.map((week, _weekIndex) => (
-              <div key={_weekIndex} className="grid grid-rows-7 gap-1">
+            {weeks.map(week => (
+              <div key={week[0].toISOString()} className="grid grid-rows-7 gap-1">
                 {week.map((date, dayIndex) => {
                   const dateString = date.toISOString().split('T')[0];
                   const tasksCompleted = streakData[dateString] || 0;
@@ -73,13 +73,15 @@ const StreakTracker: React.FC<StreakTrackerProps> = ({ streakData }) => {
                   return (
                     <div
                       key={dayIndex}
-                      className={`w-4 h-4 ${getColor(tasksCompleted)} ${isToday ? 'ring-2 ring-yellow-400' : ''} ${!isCurrentYear ? 'opacity-25' : ''} rounded-sm transition-colors duration-200 ease-in-out hover:ring-2 hover:ring-green-300`}
+                      className={`w-4 h-4 ${getColor(tasksCompleted)} ${isToday ? 'ring-2 ring-yellow-400' : ''
+                        } ${!isCurrentYear ? 'opacity-25' : ''} rounded-sm transition-colors duration-200 ease-in-out hover:ring-2 hover:ring-green-300`}
                       title={`${date.toDateString()}: ${tasksCompleted} tasks completed`}
                     />
                   );
                 })}
               </div>
             ))}
+
           </div>
         </div>
       </div>
@@ -97,5 +99,5 @@ const StreakTracker: React.FC<StreakTrackerProps> = ({ streakData }) => {
   )
 }
 
-export default StreakTracker
+export default StreakTracker;
 
