@@ -55,14 +55,26 @@
   };
 
   export default function RetroTodoList() {
-    const [todos, setTodos] = useState<Todo[]>(() => {
+    const [todos, setTodos] = useState<Todo[]>([]);
+
+    useEffect(() => {
       const savedTodos = localStorage.getItem('retroTasks');
-      return savedTodos ? JSON.parse(savedTodos) : [];
-    });
-    const [streakData, setStreakData] = useState<StreakData>(() => {
-      const savedStreakData = localStorage.getItem('streakData');
-      return savedStreakData ? JSON.parse(savedStreakData) : {};
-    });
+      if (savedTodos) {
+        setTodos(JSON.parse(savedTodos));
+      }
+    }, []);
+
+    const [streakData, setStreakData] = useState<StreakData>({});
+
+    useEffect(() => {
+      if (typeof window !== 'undefined') {
+        const savedStreakData = localStorage.getItem('streakData');
+        if (savedStreakData) {
+          setStreakData(JSON.parse(savedStreakData));
+        }
+      }
+    }, []);
+
     const [inputValue, setInputValue] = useState('')
     const [subtaskInput, setSubtaskInput] = useState('')
     const [cursorVisible, setCursorVisible] = useState(true)
@@ -79,16 +91,31 @@
     const [searchTerm, setSearchTerm] = useState('')
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [completionPercentage, setCompletionPercentage] = useState(0)
-    const [gameState, setGameState] = useState<GameState>(() => {
-      const savedGameState = localStorage.getItem('gameState');
-      return savedGameState ? JSON.parse(savedGameState) : {
-        activeMission: null,
-        completedMissions: [],
-        unlockedAchievements: [],
-        difficultyLevel: 0,
-        streak: 0,
-      };
+    const [gameState, setGameState] = useState<GameState>({
+      activeMission: null,
+      completedMissions: [],
+      unlockedAchievements: [],
+      difficultyLevel: 0,
+      streak: 0,
     });
+
+    useEffect(() => {
+      if (typeof window !== 'undefined') {
+        const savedGameState = localStorage.getItem('gameState');
+        if (savedGameState) {
+          setGameState(JSON.parse(savedGameState));
+        }
+      }
+    }, []);
+  
+    useEffect(() => {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('gameState', JSON.stringify(gameState));
+      }
+    }, [gameState]);
+  
+
+
     const [showAchievements, setShowAchievements] = useState(false);
     const [interactionPrompt, setInteractionPrompt] = useState<string | null>(null);
 
