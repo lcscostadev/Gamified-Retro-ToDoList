@@ -1,4 +1,5 @@
 # Gamified Retro To-Do List 🎮📝
+Gamified Retro To-Do List engaging task management tool that combines the nostalgia of retro gaming with modern productivity principles. This application makes organizing your tasks fun, interactive, and efficient!
 
 ## Features 🚀
 
