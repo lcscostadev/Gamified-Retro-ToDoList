@@ -20,11 +20,13 @@ Ensure you have the following installed on your system:
   ```bash
    git clone https://github.com/lcscostadev/Gamified-Retro-ToDoList.git
    cd Gamified-Retro-ToDoList
-
+  ```
 2. Install dependencies:
+  ```bash
    npm install
-
+  ```
 3. Run the application:
+  ```bash
    npm run dev
   ```
 
